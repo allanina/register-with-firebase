@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import './App.css';
 import { auth } from './firebase-config'
 
@@ -29,9 +29,22 @@ function App() {
     }
   };
 
-  const login = async () => { };
+  const login = async () => {
+    try {
+      const user = await signInWithEmailAndPassword(
+        auth,
+        loginEmail,
+        loginPassword
+      );
+      console.log(user);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
-  const logout = async () => { };
+  const logout = async () => {
+    await signOut(auth);
+  };
 
   return (
     <div className="App">
@@ -69,12 +82,12 @@ function App() {
             setLoginPassword(event.target.value);
           }}
         />
-        <button>Enviar</button>
+        <button onClick={login}>Enviar</button>
       </div>
       <div className="logged-user">
         <span>Usuário logado em:</span>
-        {userCurrentlyLogged.email}
-        <button>Logout</button>
+        {userCurrentlyLogged?.email}
+        <button onClick={logout}>Logout</button>
       </div>
     </div>
   );
