@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import './App.css';
-import { auth } from './firebase-config'
+import { auth } from './config/firebase-config'
 
 function App() {
 
@@ -23,6 +23,8 @@ function App() {
         registerEmail,
         registerPassword
       );
+      setRegisterEmail("")
+      setRegisterPassword("")
       console.log(user);
     } catch (error) {
       alert(error.message);
@@ -51,6 +53,7 @@ function App() {
       <div className="register-user">
         <h3>Registrar usuário</h3>
         <input
+          value={registerEmail}
           type="email"
           placeholder="E-mail"
           onChange={(event) => {
@@ -58,6 +61,7 @@ function App() {
           }}
         />
         <input
+          value={registerPassword}
           type="password"
           placeholder="Senha"
           onChange={(event) => {
@@ -69,6 +73,7 @@ function App() {
       <div className="login-user">
         <h3>Login de usuário</h3>
         <input
+          value={loginEmail}
           type="email"
           placeholder="E-mail"
           onChange={(event) => {
@@ -76,6 +81,7 @@ function App() {
           }}
         />
         <input
+          value={loginPassword}
           type="password"
           placeholder="Senha"
           onChange={(event) => {
